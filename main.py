@@ -10,7 +10,6 @@ import os
 from streamlit_js_eval import streamlit_js_eval
 
 # Load YOLOv5 model
-# model = yolov5.load('yolov5s')
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
 
 # Streamlit UI Layout
@@ -70,11 +69,18 @@ if uploaded_file:
         vehicle_detected = [cls for cls in detected_classes if cls in vehicle_classes]
         st.session_state.categorized_count = {cls: vehicle_detected.count(cls) for cls in set(vehicle_detected)}
 
+        # Calculate total vehicles by adding the counts of all detected vehicle categories
+        st.session_state.total_vehicles = sum(st.session_state.categorized_count.values())
+
 # Display detection results if available
 if st.session_state.annotated_image is not None:
     st.image(st.session_state.annotated_image, caption="Detected Vehicles", use_container_width=True)
 
     st.subheader("Results:")
+    # Display total number of vehicles
+    if st.session_state.total_vehicles > 0:
+        st.metric("Total Vehicles", st.session_state.total_vehicles)
+
     for cls, count in st.session_state.categorized_count.items():
         st.metric(f"{cls.capitalize()}s", count)
 
@@ -82,7 +88,7 @@ if st.session_state.annotated_image is not None:
         # Create PDF
         pdf = FPDF()
         pdf.add_page()
-        pdf.set_font("Arial", size=12)
+        pdf.set_font("Arial", style='B', size=12)
         pdf.cell(200, 10, txt="Vehicle Detection Results", ln=True, align='C')
 
         # Save the annotated image temporarily
@@ -95,8 +101,13 @@ if st.session_state.annotated_image is not None:
 
         # Add some space before the results section
         pdf.ln(150)  # Adds some space between the image and text
+        pdf.set_font("Arial", size=12)
 
-        # Add Results to PDF dynamically
+        # Add the total number of vehicles to PDF
+        if st.session_state.total_vehicles > 0:
+            pdf.cell(0, 10, txt=f"Total Vehicles: {st.session_state.total_vehicles}")
+            pdf.ln(10)
+
         for cls, count in st.session_state.categorized_count.items():
             pdf.cell(0, 10, txt=f"Total {cls.capitalize()}s: {count}")
             pdf.ln(10)
