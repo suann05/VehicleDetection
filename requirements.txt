@@ -7,3 +7,4 @@ ultralytics==8.3.36
 Pillow==11.0.0
 fpdf==1.7.2
 streamlit-js-eval==0.1.7
+yolov5==7.0.14
