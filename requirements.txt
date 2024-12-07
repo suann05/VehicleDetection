@@ -2,6 +2,8 @@ streamlit
 opencv-python-headless
 numpy
 torch
+torchvision
+ultralytics
 Pillow
 fpdf
 streamlit-js-eval
