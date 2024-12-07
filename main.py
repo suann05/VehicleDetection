@@ -8,9 +8,10 @@ from fpdf import FPDF
 import tempfile
 import os
 from streamlit_js_eval import streamlit_js_eval
+import yolov5
 
 # Load YOLOv5 model
-model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
+model = yolov5.load('yolov5s')
 
 # Streamlit UI Layout
 st.set_page_config(layout="wide")
