@@ -94,7 +94,7 @@ if st.session_state.annotated_image is not None:
             pdf.image(temp_image_file.name, x=10, y=30, w=180)
 
         # Add some space before the results section
-        pdf.ln(130)  # Adds some space between the image and text
+        pdf.ln(150)  # Adds some space between the image and text
 
         # Add Results to PDF dynamically
         for cls, count in st.session_state.categorized_count.items():
