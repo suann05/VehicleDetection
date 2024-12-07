@@ -1,0 +1,7 @@
+streamlit
+opencv-python
+numpy
+torch
+Pillow
+fpdf
+streamlit-js-eval
