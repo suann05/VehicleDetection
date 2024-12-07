@@ -3,7 +3,7 @@ opencv-python-headless
 numpy
 torch
 torchvision
-ultralytics
+ultralytics==8.3.46
 Pillow
 fpdf
 streamlit-js-eval
